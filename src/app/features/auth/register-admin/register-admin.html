@@ -1,0 +1,53 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <h2>Create Admin Account</h2>
+
+    <a routerLink="/admin" routerLinkActive="active" class="back-btn">
+     Back to Dashboard
+    </a>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <input type="text" placeholder="Full Name" formControlName="name" />
+
+      @if (form.get('name')?.touched && form.get('name')?.invalid) {
+      <small class="error">Name is required</small>
+      }
+
+      <input type="email" placeholder="Email Address" formControlName="email" />
+
+      @if (form.get('email')?.touched && form.get('email')?.invalid) {
+      <small class="error">
+        @if (form.get('email')?.errors?.['required']) {
+        Email is required
+        }
+        @if (form.get('email')?.errors?.['email']) {
+        Enter a valid email
+        }
+      </small>
+      }
+
+      <input type="password" placeholder="Password" formControlName="password" />
+
+      @if (form.get('password')?.touched && form.get('password')?.invalid) {
+      <small class="error">
+        @if (form.get('password')?.errors?.['required']) {
+        Password is required
+        }
+        @if (form.get('password')?.errors?.['minlength']) {
+        Minimum 6 characters required
+        }
+      </small>
+      }
+
+      <button type="submit" [disabled]="form.invalid">
+        Register Admin
+      </button>
+    </form>
+
+    @if (success()) {
+    <p class="success-message">
+      Admin registered successfully!
+    </p>
+    }
+  </div>
+</div>

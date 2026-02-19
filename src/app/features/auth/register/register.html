@@ -1,0 +1,78 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <h2>Create Account</h2>
+    <p class="subtitle">Register to get started</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="form-group">
+        <label>Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Enter your name"
+          [class.invalid]="form.controls.name.touched && form.controls.name.invalid"
+        />
+
+        @if (form.controls.name.touched && form.controls.name.invalid) {
+          <div class="error">
+            @if (form.controls.name.errors?.['required']) {
+              <span>Name is required</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          [class.invalid]="form.controls.email.touched && form.controls.email.invalid"
+        />
+
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <div class="error">
+            @if (form.controls.email.errors?.['required']) {
+              <span>Email is required</span>
+            }
+            @if (form.controls.email.errors?.['email']) {
+              <span>Please enter a valid email address</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          [class.invalid]="form.controls.password.touched && form.controls.password.invalid"
+        />
+
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <div class="error">
+            @if (form.controls.password.errors?.['required']) {
+              <span>Password is required</span>
+            }
+            @if (form.controls.password.errors?.['minlength']) {
+              <span>Password must be at least 6 characters</span>
+            }
+          </div>
+        }
+      </div>
+
+      <button type="submit" [disabled]="form.invalid">
+        Register
+      </button>
+
+      <div class="login-link">
+        Already have an account?
+        <a routerLink="/login">Login</a>
+      </div>
+    </form>
+  </div>
+</div>

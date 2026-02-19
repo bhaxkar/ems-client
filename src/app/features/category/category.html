@@ -1,0 +1,105 @@
+<div class="category-container">
+
+  <div class="admin-header">
+    <h2>Category Management</h2>
+    <a routerLink="/admin" routerLinkActive="active" class="back-btn">
+      Back to Dashboard
+    </a>
+  </div>
+
+  <div class="form-card">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" formControlName="name"
+            [class.invalid]="form.controls.name.invalid && form.controls.name.touched" />
+
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+          <div class="error">
+
+            @if (form.controls.name.errors?.['required']) {
+            <small>Name is required.</small>
+            }
+
+            @if (form.controls.name.errors?.['minlength']) {
+            <small>
+              Name must be at least
+              {{ form.controls.name.errors?.['minlength'].requiredLength }}
+              characters long.
+            </small>
+            }
+
+          </div>
+          }
+        </div>
+
+        <div class="form-group full">
+          <label>Description</label>
+          <textarea formControlName="description"></textarea>
+        </div>
+
+        <div class="form-group checkbox">
+          <label>
+            <input type="checkbox" formControlName="isActive" />
+            Active
+          </label>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="primary" [disabled]="form.invalid">
+          {{ editMode() ? 'Update Category' : 'Create Category' }}
+        </button>
+
+        @if (editMode()) {
+        <button type="button" class="secondary" (click)="reset()">
+          Cancel
+        </button>
+        }
+      </div>
+
+    </form>
+  </div>
+
+  <hr />
+
+  @if (categoryService.loading()) {
+  <p class="loading">Loading...</p>
+  }
+
+  <div class="card-grid">
+    @for (cat of categoryService.categories(); track cat.id) {
+
+    <div class="category-card">
+
+      <div class="card-header">
+        <span class="id">{{ cat.id }}</span>
+
+        <span class="badge" [class.active]="cat.isActive">
+          {{ cat.isActive ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+
+      <h4>{{ cat.name }}</h4>
+
+      <p class="description">
+        {{ cat.description || 'No description provided.' }}
+      </p>
+
+      <small class="date">
+        Created: {{ cat.createdAt | date }}
+      </small>
+
+      <div class="card-actions">
+        <button class="edit-btn" (click)="edit(cat)">Edit</button>
+        <button class="delete-btn" (click)="remove(cat.id)">Delete</button>
+      </div>
+
+    </div>
+    }
+  </div>
+</div>

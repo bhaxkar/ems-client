@@ -1,0 +1,127 @@
+/* Page Wrapper */
+.submit-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #4e73df, #1cc88a);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Card */
+.submit-card {
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.back-link {
+  font-size: 13px;
+  text-decoration: none;
+  color: #4e73df;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+/* Inputs */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: 0.3s;
+  background: #fff;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Focus */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #4e73df;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(78, 115, 223, 0.2);
+}
+
+/* Invalid */
+.invalid {
+  border-color: #e74a3b !important;
+}
+
+/* Error */
+.error {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #e74a3b;
+  font-weight: 500;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4e73df;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #2e59d9;
+}
+
+button:disabled {
+  background-color: #b7b9cc;
+  cursor: not-allowed;
+}
+
+/* Success Message */
+.success-message {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #1cc88a;
+  font-weight: 600;
+}

@@ -1,0 +1,74 @@
+<div class="status-container">
+  <div class="admin-header">
+    <h2>Status Management</h2>
+    <a routerLink="/admin" routerLinkActive="active" class="back-btn">
+      Back to Dashboard
+    </a>
+  </div>
+
+  <div class="status-card">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="form-row">
+        <input type="text" formControlName="name" placeholder="Status Name" />
+
+        <label class="checkbox">
+          <input type="checkbox" formControlName="isActive" />
+          <span>Active</span>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="primary">
+          {{ editMode() ? 'Update' : 'Create' }}
+        </button>
+
+        @if (editMode()) {
+        <button type="button" class="secondary" (click)="reset()">
+          Cancel
+        </button>
+        }
+      </div>
+    </form>
+  </div>
+
+  <hr />
+
+  @if (statusService.loading()) {
+  <p class="loading">Loading...</p>
+  }
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Active</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (status of statusService.statuses(); track status.id) {
+        <tr>
+          <td>{{ status.id }}</td>
+          <td>{{ status.name }}</td>
+          <td>
+            <span class="badge" [class.active]="status.isActive">
+              {{ status.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td>{{ status.createdAt | date }}</td>
+          <td>
+            <button class="edit-btn" (click)="edit(status)">Edit</button>
+            <button class="delete-btn" (click)="remove(status.id)">Delete</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

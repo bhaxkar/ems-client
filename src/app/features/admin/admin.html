@@ -1,0 +1,33 @@
+<div class="admin-container">
+  <aside class="admin-sidebar">
+    <h3>Admin Panel</h3>
+
+    <nav>
+      <ul>
+        <li>
+          <a routerLink="/admin/categories" routerLinkActive="active">
+            Categories
+          </a>
+        </li>
+
+        <li>
+          <a routerLink="/admin/statuses" routerLinkActive="active">
+            Status
+          </a>
+        </li>
+
+         <li>
+          <a routerLink="/register-admin" routerLinkActive="active">
+            Admin Registration
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <button (click)="logout()">Logout</button>
+  </aside>
+
+  <main class="admin-main">
+    <router-outlet></router-outlet>
+  </main>
+</div>

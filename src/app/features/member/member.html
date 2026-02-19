@@ -1,0 +1,20 @@
+<div class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+        <h2>Member Dashboard</h2>
+
+        <div class="dashboard-actions">
+            @if (showEnquiryButton()) {
+            <button routerLink="/member/enquiry" class="dashboard-btn primary-btn">
+                Submit Enquiry
+            </button>
+            }
+
+            <button (click)="logout()" class="dashboard-btn danger-btn">
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <router-outlet></router-outlet>
+</div>

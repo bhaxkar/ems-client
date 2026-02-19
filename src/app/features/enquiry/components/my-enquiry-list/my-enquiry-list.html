@@ -1,0 +1,18 @@
+<div class="dashboard-content">
+
+  @if (enquiryService.loading()) {
+  <div class="status-text">Loading...</div>
+  } @else if (enquiryService.enquiries().length === 0) {
+  <div class="status-text">No enquiries found.</div>
+  } @else {
+  <div class="enquiry-list">
+    @for (e of enquiryService.enquiries(); track e.id) {
+    <div class="enquiry-card">
+      <h3>{{ e.title }}</h3>
+      <p>{{ e.message }}</p>
+      <p>{{ e.enquiryDate | date }}</p>
+    </div>
+    }
+  </div>
+  }
+</div>

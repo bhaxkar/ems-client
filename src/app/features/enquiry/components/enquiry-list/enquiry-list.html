@@ -1,0 +1,35 @@
+<h2>All Enquiries</h2>
+
+@if (enquiryService.loading()) {
+  <p>Loading...</p>
+}
+
+<div class="card-grid">
+  @for (enq of enquiryService.enquiries(); track enq.id) {
+    <div class="enquiry-card">
+      
+      <div class="card-header">
+        <span class="enq-id">#{{ enq.id }}</span>
+        <span class="status">{{ enq.status.name }}</span>
+      </div>
+
+      <h4 class="title">{{ enq.title }}</h4>
+
+      <p class="message">
+        {{ enq.message }}
+      </p>
+
+      <div class="meta">
+        <div><strong>Category:</strong> {{ enq.category.name }}</div>
+        <div><strong>Customer:</strong> {{ enq.customerName }}</div>
+        <div><strong>Email:</strong> {{ enq.customerEmail }}</div>
+      </div>
+
+      <div class="actions">
+        <button class="edit-btn" (click)="edit(enq.id)">Edit</button>
+        <button class="delete-btn" (click)="remove(enq.id)">Delete</button>
+      </div>
+
+    </div>
+  }
+</div>
