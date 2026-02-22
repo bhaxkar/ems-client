@@ -1,14 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { EnquiryService } from '../../service/enquiry-service';
 import { CategoryService } from '../../../category/service/category-service';
 
 @Component({
   selector: 'app-submit-enquiry',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './submit-enquiry.html',
   styleUrl: './submit-enquiry.css',
 })

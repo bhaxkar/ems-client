@@ -1,0 +1,95 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold">EnquiryPro</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" routerLink="/login" routerLinkActive="active">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary ms-3 px-4" routerLink="/register" routerLinkActive="active">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center">
+    <div class="container text-center text-lg-start">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    Smart Enquiry Management Made Simple
+                </h1>
+                <p class="lead mb-4">
+                    Track, manage, and convert enquiries efficiently with our modern,
+                    easy-to-use system built for businesses.
+                </p>
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
+                    <button class="btn btn-primary btn-lg px-4">Start Free Trial</button>
+                    <button class="btn btn-outline-light btn-lg px-4">Learn More</button>
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                <img src="https://cdn-icons-png.flaticon.com/512/9068/9068754.png" class="img-fluid hero-img"
+                    alt="Enquiry Illustration" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features-section py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-5">Powerful Features</h2>
+
+        <div class="row g-4">
+
+            @for (feature of [
+            {icon:'bi-clipboard-data', title:'Track Enquiries', desc:'Monitor all enquiries in one centralized
+            dashboard.'},
+            {icon:'bi-people', title:'Customer Management', desc:'Manage customer details and communication history.'},
+            {icon:'bi-bar-chart', title:'Analytics & Reports', desc:'Get insights with real-time reports and
+            statistics.'},
+            {icon:'bi-shield-lock', title:'Secure System', desc:'Role-based access control and secure data handling.'}
+            ]; track $index) {
+
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card p-4 h-100">
+                    <i class="bi {{feature.icon}} feature-icon"></i>
+                    <h5 class="fw-bold mt-3">{{feature.title}}</h5>
+                    <p class="text-muted">{{feature.desc}}</p>
+                </div>
+            </div>
+
+            }
+
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section text-center py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-3">Ready to Simplify Your Enquiries?</h2>
+        <p class="mb-4">Start managing enquiries the smart way today.</p>
+        <button class="btn btn-light btn-lg px-5">Get Started Now</button>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer py-4 text-center">
+    <div class="container">
+        <p class="mb-0">
+            © 2026 EnquiryPro. All Rights Reserved.
+        </p>
+    </div>
+</footer>

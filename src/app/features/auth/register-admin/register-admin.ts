@@ -6,7 +6,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-register-admin',
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, RouterLinkActive],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register-admin.html',
   styleUrl: './register-admin.css',
 })

@@ -1,0 +1,64 @@
+/* Hero Section */
+.hero-section {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0d6efd, #6610f2);
+  color: white;
+  padding-top: 100px;
+}
+
+.hero-img {
+  max-width: 80%;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Features */
+.features-section {
+  background-color: #f8f9fa;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  font-size: 40px;
+  color: #0d6efd;
+}
+
+/* CTA */
+.cta-section {
+  background: linear-gradient(135deg, #6610f2, #0d6efd);
+  color: white;
+}
+
+/* Footer */
+.footer {
+  background: #111;
+  color: #ccc;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+  }
+
+  .hero-img {
+    max-width: 60%;
+  }
+}

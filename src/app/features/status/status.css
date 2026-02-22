@@ -1,225 +1,182 @@
-/* Page Container */
+/* ================================
+   PAGE CONTAINER
+================================ */
 .status-container {
-  padding: 30px;
-  background: #f8fafc;
+  padding: 24px;
+  background: linear-gradient(to bottom right, #f8fafc, #eef2f7);
   min-height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
 }
 
-.admin-container {
-  padding: 30px;
-  background-color: #f4f6f9;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-}
-
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
-.admin-header h2 {
-  margin: 0;
-  color: #333;
-}
-
-.back-btn {
-  text-decoration: none;
-  padding: 8px 14px;
-  background-color: #1976d2;
-  color: white;
-  border-radius: 6px;
-  transition: 0.3s;
-}
-
-.back-btn:hover {
-  background-color: #125ea5;
-}
-
-/* Heading */
 .status-container h2 {
-  margin-bottom: 20px;
+  font-size: 20px;
   font-weight: 600;
   color: #1e293b;
+  margin: 0;
 }
 
-/* Card */
+/* ================================
+   GRID LAYOUT
+================================ */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+
+/* ================================
+   STATUS CARD
+================================ */
 .status-card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  margin-bottom: 25px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  transition: all 0.25s ease;
+  overflow: hidden;
 }
 
-/* Form Row */
-.form-row {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  flex-wrap: wrap;
+.status-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
 }
 
-.status-card input[type="text"] {
-
-  padding: 1rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 14px;
-  min-width: 220px;
-  background: #f1f5f9;
-  transition: 0.2s ease;
-}
-
-.status-card input[type="text"]:focus {
-  border-color: #3b82f6;
-  background: white;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
-}
-
-/* Checkbox */
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: #334155;
-  cursor: pointer;
-}
-
-/* Form Buttons */
-.form-actions {
-  margin-top: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-/* Primary Button */
-.primary {
-  padding: 8px 14px;
-  background: #3b82f6;
-  color: white;
+/* ================================
+   CARD HEADER
+================================ */
+.status-header {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  padding: 10px 16px;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s ease;
 }
 
-.primary:hover {
-  background: #2563eb;
-}
-
-/* Secondary Button */
-.secondary {
-  padding: 8px 14px;
-  background: #e2e8f0;
-  color: #1e293b;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.secondary:hover {
-  background: #cbd5e1;
-}
-
-/* Loading Text */
-.loading {
-  color: #64748b;
-  font-size: 14px;
-}
-
-/* Table Wrapper */
-.table-wrapper {
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  overflow-x: auto;
-}
-
-/* Table */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-/* Table Head */
-thead {
-  background: #f1f5f9;
-}
-
-th {
-  text-align: left;
-  padding: 12px;
-  font-weight: 600;
-  color: #334155;
-}
-
-/* Table Body */
-td {
-  padding: 12px;
-  border-top: 1px solid #e2e8f0;
-  color: #475569;
-}
-
-/* Row Hover */
-tbody tr:hover {
-  background: #f8fafc;
-}
-
-/* Badge */
-.badge {
-  padding: 4px 8px;
-  border-radius: 20px;
+.status-id {
   font-size: 12px;
-  background: #fee2e2;
-  color: #b91c1c;
+  font-weight: 600;
+  color: #ffffff;
 }
 
-.badge.active {
+/* ================================
+   STATUS BADGE
+================================ */
+.status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.status-badge.active {
   background: #dcfce7;
   color: #166534;
 }
 
-/* Action Buttons */
-.edit-btn {
-  padding: 6px 10px;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 6px;
+.status-badge.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ================================
+   CARD BODY
+================================ */
+.card-body {
+  padding: 18px;
+}
+
+.status-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.status-date {
   font-size: 12px;
-  cursor: pointer;
-  margin-right: 6px;
+  color: #94a3b8;
+}
+
+/* ================================
+   ACTION BUTTONS
+================================ */
+.status-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.status-actions .btn {
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 6px 12px;
+  transition: 0.2s ease;
+}
+
+/* Edit */
+.edit-btn {
+  background: #facc15;
+  border: none;
 }
 
 .edit-btn:hover {
-  background: #2563eb;
+  background: #eab308;
 }
 
+/* Delete */
 .delete-btn {
-  padding: 6px 10px;
   background: #ef4444;
-  color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
+  color: white;
 }
 
 .delete-btn:hover {
   background: #dc2626;
 }
 
-/* Responsive */
+/* ================================
+   LOADING TEXT
+================================ */
+.loading {
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 10px;
+}
+
+/* ================================
+   MODAL STYLING (Consistent)
+================================ */
+.modal-content {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.form-control,
+.form-check-input {
+  border-radius: 8px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
 @media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-    align-items: flex-start;
+  .card-grid {
+    grid-template-columns: 1fr;
   }
 }

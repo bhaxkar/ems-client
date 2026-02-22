@@ -1,14 +1,21 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from './service/category-service';
 import { CategoryModel } from './model/category.model';
-import { RouterLink } from '@angular/router';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './category.html',
   styleUrl: './category.css',
 })
@@ -20,14 +27,44 @@ export class Category implements OnInit {
   readonly editMode = signal(false);
   readonly selectedId = signal<number | null>(null);
 
+  @ViewChild('categoryModal') modalElement!: ElementRef;
+  private modalInstance!: Modal;
+
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
     description: [''],
     isActive: [true],
   });
-  
+
   ngOnInit(): void {
     this.categoryService.fetchAll().subscribe();
+  }
+
+  ngAfterViewInit() {
+    this.modalInstance = new Modal(this.modalElement.nativeElement);
+  }
+
+  openCreateModal() {
+    this.reset();
+    this.modalInstance.show();
+  }
+
+  openEditModal(cat: CategoryModel) {
+    this.editMode.set(true);
+    this.selectedId.set(cat.id);
+
+    this.form.patchValue({
+      name: cat.name,
+      description: cat.description ?? '',
+      isActive: cat.isActive,
+    });
+
+    this.modalInstance.show();
+  }
+
+  closeModal() {
+    this.modalInstance.hide();
+    this.reset();
   }
 
   submit() {
@@ -37,26 +74,11 @@ export class Category implements OnInit {
 
     if (this.editMode() && this.selectedId()) {
       this.categoryService.update(this.selectedId()!, payload)
-        .subscribe(() => this.reset());
+        .subscribe(() => this.closeModal());
     } else {
-
-      this.categoryService.create(payload).subscribe({
-        next: (newCat) => {
-          this.form.reset({ name: '', description: '', isActive: true });
-        }
-      });
+      this.categoryService.create(payload)
+        .subscribe(() => this.closeModal());
     }
-  }
-
-  edit(cat: CategoryModel) {
-    this.editMode.set(true);
-    this.selectedId.set(cat.id);
-
-    this.form.patchValue({
-      name: cat.name,
-      description: cat.description ?? '',
-      isActive: cat.isActive,
-    });
   }
 
   remove(id: number) {

@@ -1,20 +1,44 @@
 <div class="dashboard-wrapper">
 
-    <div class="dashboard-header">
-        <h2>Member Dashboard</h2>
+  <div class="dashboard-header">
+    <h2>Member Dashboard</h2>
 
-        <div class="dashboard-actions">
-            @if (showEnquiryButton()) {
-            <button routerLink="/member/enquiry" class="dashboard-btn primary-btn">
-                Submit Enquiry
-            </button>
-            }
+    <div class="dashboard-actions">
 
-            <button (click)="logout()" class="dashboard-btn danger-btn">
-                Logout
-            </button>
-        </div>
+      <button routerLink="/member/profile" class="dashboard-btn secondary-btn">
+        Profile
+      </button>
+
+      <button (click)="openModal()" class="dashboard-btn primary-btn">
+        Submit Enquiry
+      </button>
+
+      <button (click)="logout()" class="dashboard-btn danger-btn">
+        Logout
+      </button>
+
     </div>
+  </div>
 
-    <router-outlet></router-outlet>
+  <!-- MEMBER CONTENT -->
+  <router-outlet></router-outlet>
+
+</div>
+
+<!-- ================= BOOTSTRAP MODAL ================= -->
+<div #enquiryModal class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Submit Enquiry</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeModal()"></button>
+      </div>
+
+      <div class="modal-body">
+        <app-submit-enquiry></app-submit-enquiry>
+      </div>
+
+    </div>
+  </div>
 </div>

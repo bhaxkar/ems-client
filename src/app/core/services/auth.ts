@@ -18,22 +18,34 @@ export class AuthService {
   currentUser = signal<JwtPayload | null>(null);
   isAuthenticated = signal(false);
 
+  // login(data: any) {
+  //   return this.http.post<{ access_token: string }>(
+  //     `${this.apiUrl}/login`,
+  //     data
+  //   );
+  // }
+
   login(data: any) {
-    return this.http.post<{ access_token: string }>(
-      `${this.apiUrl}/login`,
-      data
-    );
+    return this.http.post<{
+      message: string;
+      data: {
+        name: string;
+        email: string;
+        role: 'ADMIN' | 'MEMBER';
+        accessToken: string;
+      };
+    }>(`${this.apiUrl}/login`, data);
   }
 
   register(data: any) {
-    return this.http.post<{ access_token: string }>(
-      `${this.apiUrl}/register`,
+    return this.http.post<{ message: string; data: any }>(
+      `${this.apiUrl}/register/member`,
       data
     );
   }
 
   registerAdmin(data: any) {
-    return this.http.post(`${this.apiUrl}/admin/register`, data);
+    return this.http.post(`${this.apiUrl}/register/admin`, data);
   }
 
   saveToken(token: string) {
@@ -67,5 +79,34 @@ export class AuthService {
     this.currentUser.set(null);
     this.isAuthenticated.set(false);
     this.router.navigate(['/login']);
+  }
+
+  redirectByRole() {
+
+    const role = this.getRole();
+
+    if (role === 'ADMIN') {
+      this.router.navigate(['/admin/dashboard']);
+    } else if (role === 'MEMBER') {
+      this.router.navigate(['/member']);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${this.apiUrl}/forgot-password/request`, { email });
+  }
+
+  verifyOtp(email: string, otp: string) {
+    return this.http.post(`${this.apiUrl}/forgot-password/verify`, { email, otp });
+  }
+
+  resetPassword(email: string, newPassword: string, confirmPassword: string) {
+    return this.http.post(`${this.apiUrl}/forgot-password/reset`, {
+      email,
+      newPassword,
+      confirmPassword
+    });
   }
 }

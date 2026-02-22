@@ -1,7 +1,16 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  inject,
+  AfterViewInit
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Modal } from 'bootstrap';
 import { EnquiryService } from '../../service/enquiry-service';
 import { StatusService } from '../../../status/service/status-service';
 import { Status } from '../../../status/model/status.model';
@@ -11,16 +20,20 @@ import { Status } from '../../../status/model/status.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './enquiry-edit.html',
-  styleUrl: './enquiry-edit.css',
 })
-export class EnquiryEdit implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+export class EnquiryEdit implements AfterViewInit {
+
   private fb = inject(FormBuilder);
   private enquiryService = inject(EnquiryService);
   private statusService = inject(StatusService);
 
-  id!: number;
+  @Input() enquiryId!: number;
+  @Output() updated = new EventEmitter<void>();
+
+  @ViewChild('editModalRef') editModalRef!: ElementRef;
+
+  private editModal!: Modal;
+
   statuses: Status[] = [];
 
   form = this.fb.group({
@@ -34,13 +47,19 @@ export class EnquiryEdit implements OnInit {
   });
 
   ngOnInit() {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.statusService.fetchAll().subscribe((data) => {
+    this.statusService.fetchAll().subscribe(data => {
       this.statuses = data;
     });
+  }
 
-    this.enquiryService.getById(this.id).subscribe((data) => {
+  ngAfterViewInit() {
+    this.editModal = new Modal(this.editModalRef.nativeElement);
+  }
+
+  open(id: number) {
+    this.enquiryId = id;
+
+    this.enquiryService.getById(id).subscribe(data => {
       this.form.patchValue({
         title: data.title,
         message: data.message,
@@ -52,10 +71,12 @@ export class EnquiryEdit implements OnInit {
           : '',
         statusId: data.status?.id,
       });
+
+      this.editModal.show();
     });
   }
 
-  submit() {
+  update() {
     if (this.form.invalid) return;
 
     const payload = {
@@ -65,8 +86,13 @@ export class EnquiryEdit implements OnInit {
         : undefined,
     };
 
-    this.enquiryService.update(this.id, payload).subscribe(() => {
-      this.router.navigate(['/admin']);
+    this.enquiryService.update(this.enquiryId, payload).subscribe(() => {
+      this.editModal.hide();
+      this.updated.emit();
     });
+  }
+
+  close() {
+    this.editModal.hide();
   }
 }

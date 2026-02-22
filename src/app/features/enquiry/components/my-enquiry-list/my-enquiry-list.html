@@ -1,18 +1,95 @@
-<div class="dashboard-content">
+<!-- <div class="dashboard-content">
+
+  <h3>My Tickets</h3>
 
   @if (enquiryService.loading()) {
-  <div class="status-text">Loading...</div>
-  } @else if (enquiryService.enquiries().length === 0) {
-  <div class="status-text">No enquiries found.</div>
-  } @else {
-  <div class="enquiry-list">
-    @for (e of enquiryService.enquiries(); track e.id) {
-    <div class="enquiry-card">
-      <h3>{{ e.title }}</h3>
-      <p>{{ e.message }}</p>
-      <p>{{ e.enquiryDate | date }}</p>
+    <div class="status-text">Loading...</div>
+  } 
+  @else if (enquiryService.enquiries().length === 0) {
+    <div class="status-text">No enquiries found.</div>
+  } 
+  @else {
+    <div class="enquiry-list">
+      @for (e of enquiryService.enquiries(); track e.id) {
+        <div class="ticket-card">
+          <div class="ticket-header">
+            <span class="ticket-id">#{{ e.id }}</span>
+            <span class="ticket-date">{{ e.enquiryDate | date }}</span>
+          </div>
+
+          <h5>{{ e.title }}</h5>
+          <p>{{ e.message }}</p>
+
+          <p>{{e.category.name}}</p>
+          <p>{{e.status.name}}</p>
+
+
+          <p>{{e.customerName}}</p>
+          <p>{{e.customerEmail}}</p>
+
+          <p>{{e.enquiryDate}}</p>
+
+          <p>{{e.followUpDate}}</p>
+        </div>
+      }
     </div>
-    }
-  </div>
+  }
+</div> -->
+
+<div class="dashboard-content">
+  <h3 class="section-title">My Tickets</h3>
+
+  @if (enquiryService.loading()) {
+    <div class="status-text">Loading...</div>
+  } 
+  @else if (enquiryService.enquiries().length === 0) {
+    <div class="status-text">No enquiries found.</div>
+  } 
+  @else {
+    <div class="enquiry-list">
+      @for (e of enquiryService.enquiries(); track e.id) {
+        <div class="ticket-card">
+
+          <!-- Header -->
+          <div class="ticket-header">
+            <div>
+              <span class="ticket-id">#{{ e.id }}</span>
+              <span class="ticket-date">{{ e.enquiryDate | date:'mediumDate' }}</span>
+            </div>
+            <span class="status-badge">{{ e.status.name }}</span>
+          </div>
+
+          <!-- Title -->
+          <h4 class="ticket-title">{{ e.title }}</h4>
+
+          <!-- Message -->
+          <p class="ticket-message">{{ e.message }}</p>
+
+          <!-- Info Grid -->
+          <div class="ticket-info">
+            <div class="info-item">
+              <span class="label">Category</span>
+              <span class="category-badge">{{ e.category.name }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Customer</span>
+              <span>{{ e.customerName }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Email</span>
+              <span>{{ e.customerEmail }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Follow Up</span>
+              <span>{{ e.followUpDate | date:'mediumDate' }}</span>
+            </div>
+          </div>
+
+        </div>
+      }
+    </div>
   }
 </div>

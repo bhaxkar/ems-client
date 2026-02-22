@@ -29,8 +29,7 @@ export class Register {
 
     this.auth.register(this.form.getRawValue()).subscribe({
       next: (res) => {
-        this.auth.saveToken(res.access_token);
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       },
     });
   }

@@ -2,10 +2,6 @@
   <div class="register-card">
     <h2>Create Admin Account</h2>
 
-    <a routerLink="/admin" routerLinkActive="active" class="back-btn">
-     Back to Dashboard
-    </a>
-
     <form [formGroup]="form" (ngSubmit)="submit()">
       <input type="text" placeholder="Full Name" formControlName="name" />
 

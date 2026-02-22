@@ -1,47 +1,53 @@
 import { Routes } from '@angular/router';
-import { Login } from './features/auth/login/login';
-import { Register } from './features/auth/register/register';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
-import { RegisterAdmin } from './features/auth/register-admin/register-admin';
+import { Login } from './features/auth/login/login';
+import { Register } from './features/auth/register/register';
+import { LandingPage } from './features/landing-page/landing-page';
+import { guestGuard } from './core/guards/guest-guard';
+import { Member } from './features/member/member';
 
 export const routes: Routes = [
-
+  {
+    path: '',
+    component: LandingPage,
+    canActivate: [guestGuard],
+  },
   {
     path: 'login',
     component: Login,
+    canActivate: [guestGuard],
   },
   {
     path: 'register',
     component: Register,
+    canActivate: [guestGuard],
   },
   {
-    path: 'register-admin',
-    component: RegisterAdmin
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./features/auth/forgot-password/forgot-password')
+        .then(m => m.ForgotPassword)
   },
-
   {
     path: 'member',
+    component: Member,
     canActivate: [authGuard, roleGuard('MEMBER')],
-    loadComponent: () =>
-      import('./features/member/member')
-        .then(m => m.Member),
     children: [
       {
         path: '',
         loadComponent: () =>
           import('./features/enquiry/components/my-enquiry-list/my-enquiry-list')
-            .then(m => m.MyEnquiryList),
+            .then(m => m.MyEnquiryList)
       },
       {
-        path: 'enquiry',
+        path: 'profile',
         loadComponent: () =>
-          import('./features/enquiry/components/submit-enquiry/submit-enquiry')
-            .then(m => m.SubmitEnquiry),
-      },
+          import('./features/profile/profile')
+            .then(m => m.Profile)
+      }
     ]
   },
-
   {
     path: 'admin',
     canActivate: [authGuard, roleGuard('ADMIN')],
@@ -50,7 +56,7 @@ export const routes: Routes = [
         .then(m => m.Admin),
     children: [
       {
-        path: '',
+        path: 'dashboard',
         loadComponent: () =>
           import('./features/enquiry/components/enquiry-list/enquiry-list')
             .then(m => m.EnquiryList),
@@ -68,22 +74,15 @@ export const routes: Routes = [
             .then(m => m.Status),
       },
       {
-        path: 'enquiries/edit/:id',
+        path: 'registration',
         loadComponent: () =>
-          import('./features/enquiry/components/enquiry-edit/enquiry-edit')
-            .then(m => m.EnquiryEdit),
+          import('./features/auth/register-admin/register-admin')
+            .then(m => m.RegisterAdmin)
       }
     ]
   },
-
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: '',
   },
 ];
-

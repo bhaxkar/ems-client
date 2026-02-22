@@ -1,35 +1,75 @@
 <h2>All Enquiries</h2>
 
 @if (enquiryService.loading()) {
-  <p>Loading...</p>
+<p>Loading...</p>
 }
 
 <div class="card-grid">
   @for (enq of enquiryService.enquiries(); track enq.id) {
-    <div class="enquiry-card">
-      
-      <div class="card-header">
-        <span class="enq-id">#{{ enq.id }}</span>
-        <span class="status">{{ enq.status.name }}</span>
-      </div>
+  <div class="enquiry-card">
 
-      <h4 class="title">{{ enq.title }}</h4>
-
-      <p class="message">
-        {{ enq.message }}
-      </p>
-
-      <div class="meta">
-        <div><strong>Category:</strong> {{ enq.category.name }}</div>
-        <div><strong>Customer:</strong> {{ enq.customerName }}</div>
-        <div><strong>Email:</strong> {{ enq.customerEmail }}</div>
-      </div>
-
-      <div class="actions">
-        <button class="edit-btn" (click)="edit(enq.id)">Edit</button>
-        <button class="delete-btn" (click)="remove(enq.id)">Delete</button>
-      </div>
-
+    <div class="card-header">
+      <span class="enq-id">#{{ enq.id }}</span>
+      <span class="status">{{ enq.status.name }}</span>
     </div>
+
+    <h4 class="title">{{ enq.title }}</h4>
+
+    <p class="message">
+      {{ enq.message }}
+    </p>
+
+    <div class="meta">
+      <div><strong>Category:</strong> {{ enq.category.name }}</div>
+      <div><strong>Customer:</strong> {{ enq.customerName }}</div>
+      <div><strong>Email:</strong> {{ enq.customerEmail }}</div>
+    </div>
+
+    <div class="actions">
+      <button class="edit-btn" (click)="edit(enq.id)">Edit</button>
+      <button class="delete-btn" (click)="remove(enq.id)">Delete</button>
+    </div>
+
+  </div>
   }
 </div>
+
+<div class="toast-container position-fixed top-0 start-50 mt-4">
+
+  <div #confirmToastRef class="toast border shadow">
+    <div class="toast-header bg-primary text-white">
+      <strong class="me-auto">Confirm Deletion</strong>
+      <button type="button" class="btn-close btn-close-white" (click)="cancelDelete()"></button>
+    </div>
+
+    <div class="toast-body bg-white text-dark">
+      <p class="mb-2">
+        Are you sure you want to delete this enquiry?
+      </p>
+
+      <div class="d-flex justify-content-end gap-2 mt-3">
+        <button class="btn btn-sm btn-outline-dark" (click)="cancelDelete()">
+          Cancel
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="confirmDelete()">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div #successToastRef class="toast border shadow mt-3">
+    <div class="toast-header bg-primary text-white">
+      <strong class="me-auto">Success</strong>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close">
+      </button>
+    </div>
+
+    <div class="toast-body bg-white text-dark text-center">
+      Enquiry deleted successfully.
+    </div>
+  </div>
+
+</div>
+
+<app-enquiry-edit></app-enquiry-edit>

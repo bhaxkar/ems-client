@@ -108,3 +108,10 @@ h2 {
 .delete-btn:hover {
   background: #dc2626;
 }
+
+@media (min-width: 992px) {
+  .modal {
+    left: 230px;
+    width: calc(100% - 250px);
+  }
+}

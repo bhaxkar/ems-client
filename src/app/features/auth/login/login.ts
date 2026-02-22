@@ -28,14 +28,8 @@ export class Login {
 
     this.auth.login(this.form.getRawValue()).subscribe({
       next: (res) => {
-        this.auth.saveToken(res.access_token);
-
-        const role = this.auth.getRole();
-        if (role === 'ADMIN') {
-          this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/member']);
-        }
+        this.auth.saveToken(res.data.accessToken);
+        this.auth.redirectByRole();  
       },
     });
   }
