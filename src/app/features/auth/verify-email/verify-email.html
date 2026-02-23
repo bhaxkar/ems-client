@@ -1,0 +1,80 @@
+<div class="verify-wrapper">
+  <div class="verify-card">
+
+    <h2>Email Verification</h2>
+
+    @if (email()) {
+      <p class="subtitle">
+        Enter the OTP sent to <strong>{{ email() }}</strong>
+      </p>
+    }
+
+    @if (errorMessage()) {
+      <div class="error-message">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="success-message">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="form-group">
+        <label>OTP</label>
+        <input
+          type="text"
+          formControlName="otp"
+          maxlength="6"
+          placeholder="Enter 6 digit OTP"
+          [class.invalid]="form.controls.otp.touched && form.controls.otp.invalid"
+        />
+
+        @if (form.controls.otp.touched && form.controls.otp.invalid) {
+          <div class="error">
+            @if (form.controls.otp.errors?.['required']) {
+              <span>OTP is required</span>
+            }
+            @if (form.controls.otp.errors?.['minlength']) {
+              <span>OTP must be 6 digits</span>
+            }
+          </div>
+        }
+      </div>
+
+      <button type="submit" [disabled]="form.invalid || loading()">
+        @if (loading()) {
+          Verifying...
+        } @else {
+          Verify Email
+        }
+      </button>
+    </form>
+
+    <div class="resend-section">
+      @if (!canResend()) {
+        <span>Resend OTP in {{ countdown() }}s</span>
+      } @else {
+        <button
+          type="button"
+          (click)="resendOtp()"
+          [disabled]="resendLoading()"
+        >
+          @if (resendLoading()) {
+            Sending...
+          } @else {
+            Resend OTP
+          }
+        </button>
+      }
+    </div>
+
+    <div class="login-link">
+      <a routerLink="/login">Back to Login</a>
+    </div>
+
+  </div>
+</div>

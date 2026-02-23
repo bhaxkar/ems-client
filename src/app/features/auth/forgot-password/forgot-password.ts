@@ -1,4 +1,11 @@
-import { Component, inject, signal, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  ViewChild,
+  ElementRef,
+  AfterViewInit
+} from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -6,24 +13,34 @@ import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-forgot-password',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './forgot-password.html',
-  styleUrl: './forgot-password.css',
 })
-export class ForgotPassword {
+export class ForgotPassword implements AfterViewInit {
 
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
 
   @ViewChild('successToast') toastRef!: ElementRef;
+  @ViewChild('otpInput') otpInput!: ElementRef;
 
-  // Step control (1=email, 2=otp, 3=password)
+  // STEP CONTROL
   step = signal(1);
+
+  // STATE
   loading = signal(false);
+  resendLoading = signal(false);
   message = signal<string | null>(null);
   emailValue = signal('');
 
+  // RESEND TIMER
+  countdown = signal(60);
+  canResend = signal(false);
+  private timer: any;
+
+  // FORMS
   emailForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
   });
@@ -34,21 +51,30 @@ export class ForgotPassword {
 
   passwordForm = this.fb.group({
     newPassword: ['', [Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['', [Validators.required]],
+    confirmPassword: ['', Validators.required],
   });
 
+  ngAfterViewInit() {}
+
+  // =========================
+  // STEP 1 - SEND OTP
+  // =========================
   sendOtp() {
     if (this.emailForm.invalid) return;
 
     this.loading.set(true);
+    this.message.set(null);
+
     const email = this.emailForm.value.email!;
     this.emailValue.set(email);
 
     this.authService.forgotPassword(email).subscribe({
       next: () => {
         this.step.set(2);
-        this.message.set('OTP sent to your email');
+        this.startCountdown();
         this.loading.set(false);
+
+        setTimeout(() => this.otpInput?.nativeElement.focus(), 200);
       },
       error: (err) => {
         this.message.set(err.error?.message || 'Something went wrong');
@@ -57,10 +83,14 @@ export class ForgotPassword {
     });
   }
 
+  // =========================
+  // STEP 2 - VERIFY OTP
+  // =========================
   verifyOtp() {
     if (this.otpForm.invalid) return;
 
     this.loading.set(true);
+    this.message.set(null);
 
     this.authService.verifyOtp(
       this.emailValue(),
@@ -68,7 +98,6 @@ export class ForgotPassword {
     ).subscribe({
       next: () => {
         this.step.set(3);
-        this.message.set('OTP verified successfully');
         this.loading.set(false);
       },
       error: (err) => {
@@ -78,6 +107,32 @@ export class ForgotPassword {
     });
   }
 
+  // =========================
+  // RESEND OTP
+  // =========================
+  resendOtp() {
+    if (!this.canResend()) return;
+
+    this.resendLoading.set(true);
+    this.message.set(null);
+
+    this.authService
+      .resendResetPasswordOtp(this.emailValue())
+      .subscribe({
+        next: () => {
+          this.resendLoading.set(false);
+          this.startCountdown();
+        },
+        error: (err) => {
+          this.message.set(err.error?.message || 'Failed to resend OTP');
+          this.resendLoading.set(false);
+        }
+      });
+  }
+
+  // =========================
+  // STEP 3 - RESET PASSWORD
+  // =========================
   resetPassword() {
     if (this.passwordForm.invalid) return;
 
@@ -89,6 +144,7 @@ export class ForgotPassword {
     }
 
     this.loading.set(true);
+    this.message.set(null);
 
     this.authService.resetPassword(
       this.emailValue(),
@@ -110,7 +166,30 @@ export class ForgotPassword {
     });
   }
 
-  showToast() {
+  // =========================
+  // COUNTDOWN TIMER
+  // =========================
+  private startCountdown() {
+    this.canResend.set(false);
+    this.countdown.set(60);
+
+    clearInterval(this.timer);
+
+    this.timer = setInterval(() => {
+      const value = this.countdown() - 1;
+      this.countdown.set(value);
+
+      if (value <= 0) {
+        clearInterval(this.timer);
+        this.canResend.set(true);
+      }
+    }, 1000);
+  }
+
+  // =========================
+  // SUCCESS TOAST
+  // =========================
+  private showToast() {
     const toastEl = this.toastRef.nativeElement;
     const toast = new (window as any).bootstrap.Toast(toastEl);
     toast.show();

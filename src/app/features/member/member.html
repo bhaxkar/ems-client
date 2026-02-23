@@ -4,6 +4,9 @@
     <h2>Member Dashboard</h2>
 
     <div class="dashboard-actions">
+      <button routerLink="/member" class="dashboard-btn secondary-btn">
+        Dashboard
+      </button>
 
       <button routerLink="/member/profile" class="dashboard-btn secondary-btn">
         Profile
@@ -20,12 +23,9 @@
     </div>
   </div>
 
-  <!-- MEMBER CONTENT -->
   <router-outlet></router-outlet>
-
 </div>
 
-<!-- ================= BOOTSTRAP MODAL ================= -->
 <div #enquiryModal class="modal fade" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">

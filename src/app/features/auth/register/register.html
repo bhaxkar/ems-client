@@ -7,66 +7,62 @@
 
       <div class="form-group">
         <label>Name</label>
-        <input
-          type="text"
-          formControlName="name"
-          placeholder="Enter your name"
-          [class.invalid]="form.controls.name.touched && form.controls.name.invalid"
-        />
+        <input type="text" formControlName="name" placeholder="Enter your name"
+          [class.invalid]="form.controls.name.touched && form.controls.name.invalid" />
 
         @if (form.controls.name.touched && form.controls.name.invalid) {
-          <div class="error">
-            @if (form.controls.name.errors?.['required']) {
-              <span>Name is required</span>
-            }
-          </div>
+        <div class="error">
+          @if (form.controls.name.errors?.['required']) {
+          <span>Name is required</span>
+          }
+        </div>
         }
       </div>
 
       <div class="form-group">
         <label>Email</label>
-        <input
-          type="email"
-          formControlName="email"
-          placeholder="Enter your email"
-          [class.invalid]="form.controls.email.touched && form.controls.email.invalid"
-        />
+        <input type="email" formControlName="email" placeholder="Enter your email"
+          [class.invalid]="form.controls.email.touched && form.controls.email.invalid" />
 
         @if (form.controls.email.touched && form.controls.email.invalid) {
-          <div class="error">
-            @if (form.controls.email.errors?.['required']) {
-              <span>Email is required</span>
-            }
-            @if (form.controls.email.errors?.['email']) {
-              <span>Please enter a valid email address</span>
-            }
-          </div>
+        <div class="error">
+          @if (form.controls.email.errors?.['required']) {
+          <span>Email is required</span>
+          }
+          @if (form.controls.email.errors?.['email']) {
+          <span>Please enter a valid email address</span>
+          }
+        </div>
         }
       </div>
 
       <div class="form-group">
         <label>Password</label>
-        <input
-          type="password"
-          formControlName="password"
-          placeholder="Enter your password"
-          [class.invalid]="form.controls.password.touched && form.controls.password.invalid"
-        />
+        <input type="password" formControlName="password" placeholder="Enter your password"
+          [class.invalid]="form.controls.password.touched && form.controls.password.invalid" />
 
         @if (form.controls.password.touched && form.controls.password.invalid) {
-          <div class="error">
-            @if (form.controls.password.errors?.['required']) {
-              <span>Password is required</span>
-            }
-            @if (form.controls.password.errors?.['minlength']) {
-              <span>Password must be at least 6 characters</span>
-            }
-          </div>
+        <div class="error">
+          @if (form.controls.password.errors?.['required']) {
+          <span>Password is required</span>
+          }
+          @if (form.controls.password.errors?.['minlength']) {
+          <span>Password must be at least 6 characters</span>
+          }
+        </div>
         }
       </div>
 
-      <button type="submit" [disabled]="form.invalid">
+      <!-- <button type="submit" [disabled]="form.invalid">
         Register
+      </button> -->
+
+      <button type="submit" [disabled]="form.invalid || loading()">
+        @if (loading()) {
+        Registering...
+        } @else {
+        Register
+        }
       </button>
 
       <div class="login-link">

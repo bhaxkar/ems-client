@@ -75,4 +75,3 @@ export class SubmitEnquiry implements OnInit {
     return this.form.controls;
   }
 }
-

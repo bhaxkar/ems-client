@@ -1,1 +1,170 @@
-<p>profile works!</p>
+<!-- <div class="profile-container" *ngIf="profile() as user">
+
+  <div class="card">
+
+    <h2>My Profile</h2>
+    <div class="avatar-section">
+      <img [src]="imagePreview()" class="avatar" />
+
+      <input type="file" (change)="onFileSelected($event)" />
+
+      <button (click)="uploadImage()">Upload</button>
+    </div>
+
+    <div class="info">
+      <p><strong>Name:</strong> {{ user.name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Role:</strong> {{ user.role }}</p>
+    </div>
+
+    <hr />
+
+    <div class="password-section">
+      <h3>Change Password</h3>
+
+      <input
+        type="password"
+        placeholder="Current Password"
+        [(ngModel)]="currentPassword"
+      />
+
+      <input
+        type="password"
+        placeholder="New Password"
+        [(ngModel)]="newPassword"
+      />
+
+      <button (click)="requestPasswordChange()">
+        Request OTP
+      </button>
+
+      <div *ngIf="showOtpSection()" class="otp-section">
+        <input
+          type="text"
+          placeholder="Enter OTP"
+          [(ngModel)]="otp"
+        />
+
+        <button (click)="confirmPasswordChange()">
+          Confirm Change
+        </button>
+
+        <button class="resend" (click)="resendOtp()">
+          Resend OTP
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div> -->
+
+<div class="container mt-5" *ngIf="profile() as user">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="card shadow-lg border-0">
+
+        <div class="card-body p-4">
+
+          <h3 class="text-center mb-4 fw-bold">My Profile</h3>
+
+          <!-- PROFILE IMAGE -->
+          <div class="text-center mb-4">
+            <img
+              [src]="imagePreview()"
+              class="rounded-circle border shadow"
+              width="150"
+              height="150"
+              style="object-fit: cover;"
+            />
+
+            <div class="mt-3">
+              <input
+                type="file"
+                class="form-control mb-2"
+                (change)="onFileSelected($event)"
+              />
+
+              <button
+                class="btn btn-primary w-100"
+                (click)="uploadImage()"
+                [disabled]="!selectedFile"
+              >
+                Upload Image
+              </button>
+            </div>
+          </div>
+
+          <!-- USER INFO -->
+          <div class="mb-4">
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Role:</strong>
+              <span class="badge bg-secondary m-2">
+                {{ user.role }}
+              </span>
+            </p>
+          </div>
+
+          <hr />
+
+          <!-- CHANGE PASSWORD -->
+          <div>
+            <h5 class="mb-3">Change Password</h5>
+
+            <input
+              type="password"
+              class="form-control mb-2"
+              placeholder="Current Password"
+              [(ngModel)]="currentPassword"
+            />
+
+            <input
+              type="password"
+              class="form-control mb-2"
+              placeholder="New Password"
+              [(ngModel)]="newPassword"
+            />
+
+            <button
+              class="btn btn-warning w-100 mb-3"
+              (click)="requestPasswordChange()"
+              [disabled]="!currentPassword || !newPassword"
+            >
+              Request OTP
+            </button>
+
+            <!-- OTP SECTION -->
+            <div *ngIf="showOtpSection()" class="border rounded p-3 bg-light">
+
+              <input
+                type="text"
+                class="form-control mb-2"
+                placeholder="Enter OTP"
+                [(ngModel)]="otp"
+              />
+
+              <button
+                class="btn btn-success w-100 mb-2"
+                (click)="confirmPasswordChange()"
+                [disabled]="!otp"
+              >
+                Confirm Change
+              </button>
+
+              <button
+                class="btn btn-outline-secondary w-100"
+                (click)="resendOtp()"
+              >
+                Resend OTP
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import { Register } from './features/auth/register/register';
 import { LandingPage } from './features/landing-page/landing-page';
 import { guestGuard } from './core/guards/guest-guard';
 import { Member } from './features/member/member';
+import { VerifyEmail } from './features/auth/verify-email/verify-email';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,10 @@ export const routes: Routes = [
     path: 'register',
     component: Register,
     canActivate: [guestGuard],
+  },
+  {
+    path: 'verify-email', 
+    component: VerifyEmail
   },
   {
     path: 'forgot-password',
